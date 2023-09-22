@@ -20,10 +20,13 @@ database relationship types
       * when one of entities is partial and other is total :-
         use two tables, one for each, total participation entity has partial entity's primary-key as forign key ====> using two tables
       * when two entity are partial participation :-
-        use three tables one for each entity, and the third will have two foriegn key from entities as primary key ===> using three tables
+        use three tables one for each entity, and the third will have two foriegn key from entities with anyone of them as primary key for third table ===> using three tables
 
   2. one : many relationship
-
+      * we just look at many
+      * if many is total participation then we have two tables one for each, and primary key of one table is forighn key in many table
+      * if many is partial participation then we have three tables, one for each, and third table contains primary keys of two tables but the primary key of third table will be primary key of many table
 
   3. many : many relationship
+     * if relationship is many to many, then it will be three tables one for each and third hvae primary keys of two tables as compossed primary key of third table.
     
