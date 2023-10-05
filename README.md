@@ -60,3 +60,75 @@ ON s.d_id = d.id
 
 iii- FULL OUTER JOIN
  is used to list two tables each for its appropriate from second table, the output of this join may have many nulls in foreign keys.
+
+
+
+ ### functions in sql 
+ 1- isnull(first_name, "no data")
+   is null is function that take column and if the name is null the output should be "no data"
+ 2- coalesce(first_name, second_name, "this user has not first or second name")
+   if first name is null it displays scond_name, but if second_name is null it displays "this user has not first or second name"
+ 3- convert(varchar(3), age)
+   to convert age (int) into varchar
+ 4- concat(name , "has" , age, "years")
+    convert all data in it to string
+ 5- like
+   like is using to seach with different patterns
+    "a%" starts with a
+    "%a%" contains a 
+    "_a%" second char is a
+    "[alk]%"  starts with a or l or k
+    "[^alk]%" does not start with a or k or l
+    '[a-h]' range from a to h
+    '[^a-h]' does not start with any of that range
+    '[_]%' starts with _ char
+     '%[%]' ends with % char
+
+
+   `query 
+   select name , age 
+   from students
+   order by 1` 
+
+   this query will order the rows using first column in selected columns
+
+   `select name , age 
+   from students
+   order by department`
+
+   this query is valid even if the department is not selected in this query
+
+
+
+ ## Normalization
+
+ ### types of functional dependancy
+
+ #### full functional dependancy
+   if the whole PK is used to retrive all attributes of row 
+    
+
+ #### partial functional dependancy
+   if the pk is composite and only one field of that PK used to retrieve one or more of row's attributes (partial of PK is unique).
+
+
+   #### Transitive functional dependency
+   if non key column is used to retrive one or more of row's attributes 
+    i.e zip code is unique for each city so i can use zip code to know name of city  if zip or city_name not keys 
+    i.e if user is has full name (not key but unique), I could retrieve it's age.
+
+
+   simple primary key can not be partial dependency, but can be full or transitive functional dependency 
+
+   composite primary key can be full or partial or transitive
+    
+
+steps to achieve Normalization
+1- remove multivalued primary key
+  build table with multivalued attributes and put it in table with PK 
+2- remove partial dependencies
+   build table with that key with attributes that depends on that column and put it in table with FK of original table 
+3- remove transitive dependencies
+   build table with that non key with attributes that depends on that column and put it in table with FK of original table 
+
+     
