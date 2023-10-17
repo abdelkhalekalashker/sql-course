@@ -147,4 +147,26 @@ having count > 5;
 - use aggregate functions when selecting whole rows, but can be used if you want to select just column that aggregated using aggregation function.
 - where executes first then having.
 
+
+   ## sub queries
+```
+ SELECT name, age
+ FROM students
+ where age > avg(age);
+
+```
+previous query raises syntact error
+because
+- avg can't be used in this query unless using group.
+- some times you have to use sub query, like this case.
+
+the correct of previous query is
+```
+ SELECT name, age
+ FROM students
+ where age > (SELECT  avg(age) FROM students;) as avg_age;
+```
+this query is error free because I used inner query to select avg_age and use aggregate function in it to be comapred with outer query.
+     
+
      
