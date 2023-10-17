@@ -169,4 +169,31 @@ the correct of previous query is
 this query is error free because I used inner query to select avg_age and use aggregate function in it to be comapred with outer query.
      
 
-     
+## Union 
+
+union is used to union two xolumn values to be in one column, output column will
+- be whole values of two columns listed to be one column with both columns values.
+- column name will take the first column name of selected column.
+- can ise alias to give output value
+- two columns should be with same data type
+- if union between two tables you, tables should having same number, data types of columns.
+
+### Union all
+
+```
+SELECT name
+FROM students
+union all
+SELECT first_name
+FROM instructos
+```
+this query output will be one column listing names of students then under these names will be instructors first name.
+
+### union
+
+same as union all conditions unless union is listing distinct values only(unique and ordered values).
+## Distinct 
+in sql, three clauses will list uniqe and ordered values
+1- distinct 
+2- intersect (return all values in first that equal second table values)
+3- except (return all values in first table but not equal second table values)
