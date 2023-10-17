@@ -131,4 +131,20 @@ steps to achieve Normalization
 3- remove transitive dependencies
    build table with that non key with attributes that depends on that column and put it in table with FK of original table 
 
+## grouping
+```
+SELECT count(id), dept_id
+FROM students
+WHERE name like 'a%'
+group by dept_id
+having count > 5;
+
+```
+- this query is listing every department id besides xount of students in that department with condition that student name of these students have name starts with 'a' using 'where' clause, and group these students by department id, and condition on groups with 'having'
+- we can not use aggregate finction without group by.
+- where is used to filter rows
+- having is used to filter groups
+- use aggregate functions when selecting whole rows, but can be used if you want to select just column that aggregated using aggregation function.
+- where executes first then having.
+
      
