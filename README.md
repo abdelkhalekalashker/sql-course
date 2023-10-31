@@ -197,3 +197,27 @@ in sql, three clauses will list uniqe and ordered values
 1- distinct 
 2- intersect (return all values in first that equal second table values)
 3- except (return all values in first table but not equal second table values)
+
+
+## super and sub entities
+sub entity should be part of system, but if there are more than one table that shared in some columns, then we invented super entity, generic table
+
+#### Inheritance
+if I have Employees with different types like customer_service, drvelopers and designers, but every table have different logic and columns but are shared in some,
+I could make employees table that have all employees in all roles, and make developers and designers as sub tables inherite feom employee which is super table
+# constrains in super type
+## completness constraints 
+this constarains is two rules
+### total specialization rule
+if all rows in super table  are existed in developers table and designers table, then this is total, and represented with two lines under super table.
+if relation is total, then super table's rows should be equal rows in two tables inheriting from super, because super table can not contain any rows that not exist in any of inherting tables(all rows in super should be in one of two inheriting tables, and vise versa)
+### partial specialization rule
+if i add service providors to be type of super table (employees), but not a table from employees, then this relatiob is partial, and represented by one line under super table.
+if relation is partial, then super table's rows should be bigger than or equal rows in two tables that inherted from super, because super table may contains some rows that not exist in any of inherting tables 
+
+## Disjointedness rule
+### total disjoin 
+if employee should belongs to only table of two inheriting tables, then this rule is disjoin, row can not be part of two different tables, and represented with 'd' in the circle
+
+### overlap rule 
+If employee may be developer and designer at same time then this rule is overlap, and represented with 'o' in circle 
