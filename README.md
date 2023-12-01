@@ -169,6 +169,8 @@ the correct of previous query is
 this query is error free because I used inner query to select avg_age and use aggregate function in it to be comapred with outer query.
      
 
+
+note: where clause does not work with alias names because where is performed before select clause, but we can use it if we make this query sub query in another one
 ## Union 
 
 union is used to union two xolumn values to be in one column, output column will
@@ -221,3 +223,108 @@ if employee should belongs to only table of two inheriting tables, then this rul
 
 ### overlap rule 
 If employee may be developer and designer at same time then this rule is overlap, and represented with 'o' in circle 
+
+
+# 5th Lecture
+ when you want to insert data from table to another table( if columns types are same and selected columns <= tables's columns in table to insert to
+ ex- create new table called students with column name and age 
+   ```
+    CREATE TABLE students (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(50)
+    )
+   ```
+   
+   ```
+    insert into students 
+    select name, age from users
+   ```
+ then name and age from all records in users table will be copied to students table
+
+# Ranking Function
+its four functions 
+ 1- Row_Number()
+ 2- Dense_Rank()
+ 3- NTiles(Group)
+ 4- Rank()
+
+  -query to get maximum salary in employees 
+  
+  ```
+  select max(salary) from employees;
+```
+  
+  -max department salary in departments
+  
+  ```
+  select sum(salary) as sum_salary from employees group by dept_id order by sum_salary desc limit 1;
+```
+  
+  -second max salary in employees
+  
+  ```
+  select salary from employees order by salary desc offset 1 limit 1;
+```
+
+  
+  and what if i want to get third max salary from each department? its hell, so the ranking functions come.
+
+   1- Row_Number()
+  this function used to give number each column in ordered table this number is serial(every row has its own order number).
+    retrieve row that has max third salary in employees table
+    
+    ``` 
+              select * from (
+                             select *, Row_Number() over(order by salary desc) as RN 
+                             ) as ne_table
+                where RN = 3
+    ```
+    
+   2- Dense_Rank()
+ same as Row_Number but it differs that dense give all equals values same rank number, then if there are two employees whose salary 7000 USD then both  of them will have same rank number
+     -- retriev all rows that has salary eqaul to max third salary in employees table 
+     
+     ``` 
+          select * from (
+                         select *, Dense_Rank() over(order by salary desc) as DN 
+                        ) as new_table 
+                where DN = 1
+     ```
+
+  3- NTiles(Group)
+this function is grouping the rows into number of groups, each group has same number of rows, and if they not equal then the last group should have one row less than other groups.  
+      retriev rows in group number 2 when employees ordered by salary 
+      
+     ``` 
+          select * from (
+                         select *,  NTiles(3) over(order by salary desc) as NT 
+                        ) as new_table 
+                where NT = 1
+     ```
+     
+ 4- Rank()
+
+
+
+ ### partition
+
+ partition as same as group by but it differs than group by in use with rankinig functions, rank function is applied on each partition not on whole table's rows.
+     
+  -- select max 3rd row in each department (partition) (if i have three department then i will get three rows, (third from each partition).
+
+     ``` 
+          select * from (
+                         select *,  Row_Number() over(partition by dept_id order by salary desc) as RN 
+                        ) as new_table 
+                where RN = 3
+     ```
+
+-- select max 3rd row and whatever equal to thired max value in employees's salary in each department (partition) (if i have three department then i will get all rows that have max third value), (third from each partition).
+
+     ``` 
+          select * from (
+                         select *,  Dense_Rank() over(partition by dept_id order by salary desc) as DN 
+                        ) as new_table 
+                where DN = 3
+     ```
+   2:24
