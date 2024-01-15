@@ -327,4 +327,43 @@ this function is grouping the rows into number of groups, each group has same nu
                         ) as new_table 
                 where DN = 3
      ```
-   2:24
+
+  ### Indexing
+  #### clustered_index
+   - table's rows is sorted based on primary key of that table because primary is a clustered_index
+   - clustered_index is an index that used for ordering table's rows
+   - table can not include more than one clustered_index
+   - clustered_index is using B+ tree
+   - b+ tree is levels (root, node and leaf) node can have more than two children
+   - leaf level is including pages that include the data
+   - each node has begining of their child nodes
+   - then engine can do page scan not table scan
+   - clustered can be on any column
+   - primary key constraint creates clustred_index on that column unless other column have clustered_index
+  #### flow to search in database with clustered_index
+   1- search in the root which range includeing the id and redirect to next node
+   2- redirected node will search in its child nodes 
+   3- that node will redirect to the page that include that id
+   4- page will do page scan to get the record
+
+  #### nonclustered_index
+   - table can include nonclustered indices up to 999 indices
+   - craete unique constraint on column creates non clustered index on that column
+   -  in memory engine will create new data pages to store all values of non clustered index
+  
+  #### flow to search in database with non clustered_index
+  1- search in the root and that have begging of ranges of all child nodes
+  2- when get that value of non clustered index pointer to primary key and get the data from database
+
+  which columns to set index on? columns that used in search in the database
+  tooles to be used to suggest columns to be indexed based on database queries for a while:-
+  in sql server 1- sql server profiler
+                2- sql server tuning advisor
+                
+  
+    
+   
+   
+   
+   
+    
