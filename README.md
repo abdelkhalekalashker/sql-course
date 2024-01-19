@@ -363,7 +363,46 @@ this function is grouping the rows into number of groups, each group has same nu
   
     
    
+
    
+   ##### rollup, cube and grouping sets
+   - rollup
+    is used with group by to apply agg function on first column in group by columns
+    if i want to sum salesries of specific name for example "Ahmed"
+ ```
+    select name, sum(sal) from employees
+    group by rollup(name, dept_id);
+```
+this query will create three queries 
+
+1- calculate sum salaries of name in specific department (sum salaries of all persons named "Ahmed" in marketing department) 
+2- calculates sum salaries of specific name in all table (sum salaries of all persons named "Ahmed" in all database table regardless department) 
+3- calculates sum salaries of all returned groups  (sum of all salaries in all table)
+
+- cube
+    is used with group by to apply agg function on all columns in group by columns
+    if i want to sum salesries of specific name for example "Ahmed"
+ ```
+    select name, sum(sal) from employees
+    group by cube(name, dept_id);
+```
+this query will create four queries 
+
+1- calculate sum salaries of name in specific department (sum salaries of all persons named "Ahmed" in marketing department) 
+2- calculates sum salaries of specific name in all table (sum salaries of all persons in marketing department regardless name)
+2- calculates sum salaries of specific department in all table (sum salaries of all persons named "Ahmed" in all database table regardless the department) 
+3- calculates sum salaries of all salaries in table (sum of all salaries in all table)
+
    
-   
+- grouping sets
+    is used with group by to rollup all columns in group by columns and to cancel group by
+    output will be
+
+  1- calculates sum salaries of specific name in all table (sum salaries of all persons in marketing department regardless name)
+  2- calculates sum salaries of specific department in all table (sum salaries of all persons named "Ahmed" in all database table regardless the department) 
+  3- calculates sum salaries of all salaries in table (sum of all salaries in all table)
+ ```
+    select name, sum(sal) from employees
+    group by grouping sets(name, dept_id);
+```
     
